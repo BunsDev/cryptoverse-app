@@ -3,7 +3,6 @@ import { Routes, Route, Link } from "react-router-dom";
 import { Layout, Typography, Space } from "antd";
 import {
   Navbar,
-  Exchanges,
   HomePage,
   CryptoDetails,
   Cryptocurrencies,
@@ -24,7 +23,6 @@ function App() {
             <Routes>
               {/* NOTE "exact path" means it only gonna trigger when we go to exactly that path */}
               <Route exact path="/" element={<HomePage />} />
-              <Route exact path="/exchanges" element={<Exchanges />} />
               <Route
                 exact
                 path="/cryptocurrencies"
@@ -46,7 +44,7 @@ function App() {
           </Typography.Title>
           <Space>
             <Link to="/">Home</Link>
-            <Link to="/exchanges">Exchanges</Link>
+            <Link to="/cryptocurrencies">Cryptocurrencies</Link>
             <Link to="/news">News</Link>
           </Space>
         </div>
