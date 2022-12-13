@@ -1,26 +1,90 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { Col, Row, Typography } from "antd";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const { Title } = Typography;
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const { Title: AntTitle } = Typography;
 
 const LineChart = ({ coinHistory, currentPrice, coinName }) => {
-  console.log(coinHistory);
+  const coinPrice = [];
+  const coinTimeStamp = [];
+
+  for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
+    // NOTE Pushing coin prices
+    coinPrice.unshift(coinHistory?.data?.history[i].price);
+  }
+
+  for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
+    coinTimeStamp.unshift(
+      new Date(
+        coinHistory?.data?.history[i].timestamp * 1000
+      ).toLocaleDateString()
+    );
+  }
+
+  const data = {
+    labels: coinTimeStamp,
+    datasets: [
+      {
+        label: "Price in USD",
+        data: coinPrice,
+        fill: false,
+        backgroundColor: "#0071bd",
+        borderColor: "#0071bd",
+      },
+    ],
+  };
+
+  const options = {
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+
   return (
     <>
       <Row className="chart-header">
-        <Title level={2} className="chart-title">
+        <AntTitle level={2} className="chart-title">
           {coinName} Price Chart
-        </Title>
+        </AntTitle>
         <Col className="price-container">
-          <Title level={5} className="price-change">
+          <AntTitle level={5} className="price-change">
             {coinHistory?.data?.change}%
-          </Title>
-          <Title level={5} className="current-price">
+          </AntTitle>
+          <AntTitle level={5} className="current-price">
             Current {coinName} Price: $ {currentPrice}
-          </Title>
+          </AntTitle>
         </Col>
       </Row>
+      <Line data={data} options={options} />
     </>
   );
 };

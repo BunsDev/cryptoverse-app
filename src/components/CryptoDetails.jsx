@@ -18,7 +18,7 @@ import {
   useGetCryptoDetailsQuery,
   useGetCryptoHistoryQuery,
 } from "../services/cryptoApi";
-// import Loader from './Loader';
+import Loader from "./Loader";
 import LineChart from "./LineChart";
 
 const { Text, Title } = Typography;
@@ -33,19 +33,14 @@ const CryptoDetails = () => {
   // SECTION API Calls
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
   const cryptoDetails = data?.data?.coin;
-  const { data: coinHistory, isFetching: historyFetch } =
-    useGetCryptoHistoryQuery({ coinId, timePeriod });
+  const { data: coinHistory } = useGetCryptoHistoryQuery({
+    coinId,
+    timePeriod,
+  });
 
-  if (historyFetch) {
-    return console.log("loading...");
-  } else {
-    console.log(coinHistory);
-  }
+  if (isFetching) return <Loader />;
 
-  if (isFetching) return "Loading...";
-  console.log(cryptoDetails);
-
-  const time = ["3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y"];
+  const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
   const stats = [
     {
@@ -128,9 +123,9 @@ const CryptoDetails = () => {
       </Col>
 
       <Select
-        defaultValue="7d"
+        defaultValue={timePeriod}
+        placeholder="Select Timeperiod"
         className="select-timeperiod"
-        placeholder="Select Time Period"
         onChange={(value) => setTimePeriod(value)}
       >
         {time.map((date) => (
