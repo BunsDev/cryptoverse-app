@@ -12,16 +12,16 @@ import {
 function App() {
   return (
     <div className="app">
-      <div className="navbar">
+    {/*  <div className="navbar">
         <Navbar />
-      </div>
+      </div> */}
 
       <div className="main">
         <Layout>
           <div className="routes">
-            {/* NOTE Routes always wraps theroute */}
+            {/* NOTE Routes always wraps the route */}
             <Routes>
-              {/* NOTE "exact path" means it only gonna trigger when we go to exactly that path */}
+              {/* NOTE "exact path" means it only triggers when we go to exactly that path */}
               <Route exact path="/" element={<HomePage />} />
               <Route
                 exact
@@ -35,7 +35,7 @@ function App() {
           </div>
         </Layout>
 
-        <div className="footer">
+{/* <div className="footer">
           <Typography.Title
             level={5}
             style={{ color: "white", textAlign: "center" }}
@@ -48,6 +48,7 @@ function App() {
             <Link to="/news">News</Link>
           </Space>
         </div>
+        */}
       </div>
     </div>
   );
